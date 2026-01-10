@@ -1,4 +1,15 @@
 #pragma once
+#include "Console.h"
+#include <windows.h>
+
+void enableANSI()
+{
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD dwMode = 0;
+	GetConsoleMode(hOut, &dwMode);
+	dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+	SetConsoleMode(hOut, dwMode);
+}
 
 struct Store
 {
@@ -19,14 +30,13 @@ private:
 	Store mStore;
 	std::string mName;
 	int mCount;
-	float mPrice;
+	double mPrice;
 	Temp mTemp;
 
 public:
 	Item()
 	{
-
-
+		enableANSI();
 		mStore.mName = "Input Store Name";
 		mStore.mAddress = "Input Address";
 		mName = "Input Item Name";
@@ -39,7 +49,7 @@ public:
 	std::string GetStoreAddress() { return mStore.mAddress; }
 	std::string GetName() { return mName; }
 	int GetCount() { return mCount; }
-	float GetPrice() { return mPrice; }
+	double GetPrice() { return mPrice; }
 	Temp GetTemp() { return mTemp; }
 
 	void SetStore(std::string storeName, std::string storeAddress)
@@ -58,7 +68,7 @@ public:
 		mCount = count; 
 	}
 
-	void SetPrice(float price)
+	void SetPrice(double price)
 	{
 		mPrice = price;
 	}
@@ -68,13 +78,104 @@ public:
 		mTemp = temp;
 	}
 
+	void PrintItemDebug()
+	{
+		
+		Console::SetForegroundColor(LightGrey);
+		std::cout << "Store Name: "; 
+		Console::SetForegroundColor(White);
+		std::cout << mStore.mName;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Store Address: ";
+		Console::SetForegroundColor(White);
+		std::cout << mStore.mAddress;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Name: ";
+		Console::SetForegroundColor(White);
+		std::cout << mName;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Count: ";
+		Console::SetForegroundColor(White);
+		std::cout << mCount;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Price: ";
+		Console::SetForegroundColor(White);
+		std::cout << mPrice;
+
+		switch (mTemp)
+		{
+		case Room:
+			Console::SetForegroundColor(LightGrey);
+			std::cout << " -- Item Temp: ";
+			Console::SetForegroundColor(White);
+			std::cout << "Room";
+			break;
+		case Cold:
+			
+			Console::SetForegroundColor(Cyan);
+			std::cout << " -- Item Temp: ";
+			Console::SetForegroundColor(White);
+			std::cout << "Cold";
+			break;
+		case Freezer:
+			std::cout << " -- ";
+			Console::SetBackgroundColor(White);
+			Console::SetForegroundColor(Blue);
+			std::cout << "Item Temp:";
+			Console::SetBackgroundColor(Black);
+			Console::SetForegroundColor(LightGrey);
+			std::cout << " Freezer";
+			Console::SetForegroundColor(White);
+			break;
+		}
+	}
+
 	void PrintItem()
 	{
-		std::cout << mStore.mName << std::endl
-			<< mStore.mAddress << std::endl
-			<< mName << std::endl
-			<< mCount << std::endl
-			<< mPrice << std::endl
-			<< mTemp << std::endl;
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Name: ";
+		Console::SetForegroundColor(White);
+		std::cout << mName;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Count: ";
+		Console::SetForegroundColor(White);
+		std::cout << mCount;
+
+		Console::SetForegroundColor(LightGrey);
+		std::cout << " -- Item Price: ";
+		Console::SetForegroundColor(White);
+		std::cout << mPrice;
+
+		switch (mTemp)
+		{
+		case Room:
+			Console::SetForegroundColor(LightGrey);
+			std::cout << " -- Item Temp: ";
+			Console::SetForegroundColor(White);
+			std::cout << "Room";
+			break;
+		case Cold:
+
+			Console::SetForegroundColor(Cyan);
+			std::cout << " -- Item Temp: ";
+			Console::SetForegroundColor(White);
+			std::cout << "Cold";
+			break;
+		case Freezer:
+			std::cout << " -- ";
+			Console::SetBackgroundColor(White);
+			Console::SetForegroundColor(Blue);
+			std::cout << "Item Temp:";
+			Console::SetBackgroundColor(Black);
+			Console::SetForegroundColor(LightGrey);
+			std::cout << " Freezer";
+			Console::SetForegroundColor(White);
+			break;
+		}
 	}
 };

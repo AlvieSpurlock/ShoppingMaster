@@ -63,6 +63,66 @@ void BubbleSort(std::vector<Item>& list)
 	} while (swapped);
 }
 
+bool IsEmpty(const std::string& s)
+{
+	for (char c : s)
+	{
+		if (!std::isspace(static_cast<unsigned char>(c)))
+			return false;
+	}
+	return true;
+}
+bool IsEmpty(const std::string& string)
+{
+	for (char character : string)
+	{
+		if (!std::isspace(static_cast<unsigned char>(character)))
+			return false;
+	}
+	return true;
+}
+
+std::string GetStoreName()
+{
+	Console::SetForegroundColor(LightGrey);
+	std::cout << "Item Store Name: ";
+	Console::SetForegroundColor(White);
+	std::string newStoreName;
+	std::cin >> newStoreName;
+	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetStoreName(); }
+	else
+	{
+		return newStoreName;
+	}
+}
+
+std::string GetStoreAddress()
+{
+	Console::SetForegroundColor(LightGrey);
+	std::cout << "Item Store Address: ";
+	Console::SetForegroundColor(White);
+	std::string newStoreAddress;
+	std::cin >> newStoreAddress;
+	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetStoreAddress(); }
+	else
+	{
+		return newStoreAddress;
+	}
+}
+
+std::string GetItemName()
+{
+	Console::SetForegroundColor(LightGrey);
+	std::cout << "Item Item Name: ";
+	Console::SetForegroundColor(White);
+	std::string newItemName;
+	std::cin >> newItemName;
+	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetItemName(); }
+	else
+	{
+		return newItemName;
+	}
+}
 
 int GetItemCount()
 {
@@ -152,33 +212,20 @@ double GetItemPrice()
 Item MakeItem()
 {
 	std::vector<Item>::iterator it;
-	Console::SetForegroundColor(LightGrey);
-	std::cout << "Item Store Name: ";
-	Console::SetForegroundColor(White);
-	std::string newStoreName;
-	std::cin >> newStoreName;
+
+	std::string newStoreName = GetStoreName();
+	std::string newStoreAddress = GetStoreAddress();
+	std::string newName = GetItemName();
+	int newCount = GetItemCount();
+	double newPrice = GetItemPrice();
+	int newTemp = GetItemTemp();
 
 	std::vector<std::string> placeHolder;
 	placeHolder.push_back(newStoreName);
 
-	Console::SetForegroundColor(LightGrey);
-	std::cout << "Item Store Address: ";
-	Console::SetForegroundColor(White);
-	std::string newStoreAddress;
-	std::cin >> newStoreAddress;
-
 	placeHolder.push_back(newStoreAddress);
+	mStores.push_back(placeHolder);
 	sBubbleSort(mStores);
-
-	Console::SetForegroundColor(LightGrey);
-	std::cout << "Item Name: ";
-	Console::SetForegroundColor(White);
-	std::string newName;
-	std::cin >> newName;
-
-	int newCount = GetItemCount();
-	double newPrice = GetItemPrice();
-	int newTemp = GetItemTemp();
 
 	Item item;
 	item.SetStore(newStoreName, newStoreAddress);
@@ -229,61 +276,58 @@ void ReplaceItem(Item newItem)
 
 void UserInput()
 {
-	std::cout << "----Options----\n1:Print List\n2:Add Item\n3:Replace Item\n4:Save List\n";
-	int userIn = GetIndex("Answer? ");
-	if (userIn > 4)
+	while (true)
 	{
-		Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetIndex("Answer? ");
-	}
-	else
-	{
-		if (userIn < 1)
+		Console::SetForegroundColor(Green);
+		std::cout << "----Options----\n1:Print List\n2:Add Item\n3:Replace Item\n4:Save List\n";
+		Console::SetForegroundColor(White);
+		int userIn = GetIndex("Answer? ");
+
+		// Validate input
+		if (userIn < 1 || userIn > 4)
 		{
-			Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetIndex("Answer? ");
+			Console::SetForegroundColor(Red);
+			std::cout << "Invalid Input. Try Again.\n";
+			continue; // ask again
 		}
-	}
-	switch (userIn)
-	{
-	case 1:
-	{
-		for (size_t index = 0; index < mStores.size(); index++)
+
+		switch (userIn)
 		{
-			std::cout << mStores[index][0] << "===" << mStores[index][1] << "\n";
-			for (auto& item : mList)
+		case 1:
+			for (size_t index = 0; index < mStores.size(); index++)
 			{
-				if (item.GetStoreName() == mStores[index][0])
+				std::cout << mStores[index][0] << "===" << mStores[index][1] << "\n";
+				for (auto& item : mList)
 				{
-					item.PrintItem();
+					if (item.GetStoreName() == mStores[index][0])
+						item.PrintItem();
 				}
 			}
+			break;
+
+		case 2:
+		{
+			Item item = MakeItem();
+			AddItem(item);
+			BubbleSort(mList);
+			for (auto& item : mList) item.PrintItem();
+			break;
 		}
-		UserInput();
-	}
 
-	case 2:
-	{
-		Item item;
-		item = MakeItem();
-		AddItem(item);
-		BubbleSort(mList);
-		for (auto& item : mList) { item.PrintItem(); }
-		UserInput();
-	}
-	case 3:
-	{
-		Item item;
-		item = MakeItem();
-		ReplaceItem(item);
-		BubbleSort(mList);
-		UserInput();
-	}
+		case 3:
+		{
+			Item item = MakeItem();
+			ReplaceItem(item);
+			BubbleSort(mList);
+			break;
+		}
 
-	case 4:
-	{
+		case 4:
+			return; // exit menu
+		}
+	}
+}
 
-	}
-	}
-};
 
 void main()
 {

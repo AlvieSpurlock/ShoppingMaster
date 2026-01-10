@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="General.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ShoppingMaster.h" />
   </ItemGroup>

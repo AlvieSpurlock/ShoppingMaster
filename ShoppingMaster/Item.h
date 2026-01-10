@@ -1,5 +1,11 @@
 #pragma once
 
+struct Store
+{
+	std::string mName;
+	std::string mAddress;
+};
+
 enum Temp
 {
 	Room,
@@ -10,85 +16,65 @@ enum Temp
 class Item
 {
 private:
-	char* mStore = nullptr;
-	char* mName = nullptr;
-	int* mCount = nullptr;
-	float* mPrice = nullptr;
-	Temp* mTemp = nullptr;
+	Store mStore;
+	std::string mName;
+	int mCount;
+	float mPrice;
+	Temp mTemp;
 
 public:
 	Item()
 	{
 
 
-		mStore = new char[15];
-		strcpy_s(mStore, 15, "Input Store Name");
-		mName = new char[15];
-		strcpy_s(mName, 15, "Input Item Name");
-		mCount = new int(1);
-		mPrice = new float(1.99);
-		mTemp = new Temp(Room);
+		mStore.mName = "Input Store Name";
+		mStore.mAddress = "Input Address";
+		mName = "Input Item Name";
+		mCount = 1;
+		mPrice = 1.99;
+		mTemp = Room;
 	}
 
-	Item(char* store, char* name, int count, float price, Temp temp)
+	std::string GetStoreName() { return mStore.mName; }
+	std::string GetStoreAddress() { return mStore.mAddress; }
+	std::string GetName() { return mName; }
+	int GetCount() { return mCount; }
+	float GetPrice() { return mPrice; }
+	Temp GetTemp() { return mTemp; }
+
+	void SetStore(std::string storeName, std::string storeAddress)
 	{
-		size_t sLen = strlen(store) + 1;
-		mStore = new char[sLen];
-		strcpy_s(mStore, sLen, store);
-
-		size_t nLen = strlen(name) + 1;
-		mName = new char[nLen];
-		strcpy_s(mName, nLen, name);
-
-		mCount = new int(count);
-		mPrice = new float(price);
-		mTemp = new Temp(temp);
+		mStore.mName = storeName;
+		mStore.mAddress = storeAddress;
 	}
 
-	~Item()
+	void SetName(std::string name)
 	{
-		delete[] mStore;
-		delete[] mName;
-		delete mCount;
-		delete mPrice;
-		delete mTemp;
-	}
-
-	char* GetStore() { return mStore; }
-	char* GetName() { return mName; }
-	int GetCount() { return *mCount; }
-	float GetPrice() { return *mPrice; }
-	Temp GetTemp() { return *mTemp; }
-
-	void SetStore(char* store)
-	{
-		size_t sLen = strlen(store) + 1;
-		mStore = new char[sLen];
-		strcpy_s(mStore, sLen, store);
-	}
-
-	void SetName(char* name)
-	{
-		size_t nLen = strlen(name) + 1;
-		mName = new char[nLen];
-		strcpy_s(mName, nLen, name);
+		mName = name;
 	}
 
 	void SetCount(int count) 
 	{ 
-		delete mCount;  
-		mCount = new int(count); 
+		mCount = count; 
 	}
 
 	void SetPrice(float price)
 	{
-		delete mPrice;
-		mPrice = new float(price);
+		mPrice = price;
 	}
 
 	void SetTemp(Temp temp)
 	{
-		delete mTemp;
-		mTemp = new Temp(temp);
+		mTemp = temp;
+	}
+
+	void PrintItem()
+	{
+		std::cout << mStore.mName << std::endl
+			<< mStore.mAddress << std::endl
+			<< mName << std::endl
+			<< mCount << std::endl
+			<< mPrice << std::endl
+			<< mTemp << std::endl;
 	}
 };

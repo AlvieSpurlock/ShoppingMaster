@@ -71,6 +71,7 @@ public:
 	void SetPrice(double price)
 	{
 		mPrice = price;
+		mPrice *= mCount;
 	}
 
 	void SetTemp(Temp temp)

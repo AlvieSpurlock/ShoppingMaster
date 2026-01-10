@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include <string_view>
 #include <algorithm> 
 #include <cctype>
@@ -63,25 +64,6 @@ void BubbleSort(std::vector<Item>& list)
 	} while (swapped);
 }
 
-bool IsEmpty(const std::string& s)
-{
-	for (char c : s)
-	{
-		if (!std::isspace(static_cast<unsigned char>(c)))
-			return false;
-	}
-	return true;
-}
-bool IsEmpty(const std::string& string)
-{
-	for (char character : string)
-	{
-		if (!std::isspace(static_cast<unsigned char>(character)))
-			return false;
-	}
-	return true;
-}
-
 std::string GetStoreName()
 {
 	Console::SetForegroundColor(LightGrey);
@@ -89,11 +71,7 @@ std::string GetStoreName()
 	Console::SetForegroundColor(White);
 	std::string newStoreName;
 	std::cin >> newStoreName;
-	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetStoreName(); }
-	else
-	{
-		return newStoreName;
-	}
+	return newStoreName;
 }
 
 std::string GetStoreAddress()
@@ -103,11 +81,7 @@ std::string GetStoreAddress()
 	Console::SetForegroundColor(White);
 	std::string newStoreAddress;
 	std::cin >> newStoreAddress;
-	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetStoreAddress(); }
-	else
-	{
-		return newStoreAddress;
-	}
+	return newStoreAddress;
 }
 
 std::string GetItemName()
@@ -117,11 +91,7 @@ std::string GetItemName()
 	Console::SetForegroundColor(White);
 	std::string newItemName;
 	std::cin >> newItemName;
-	if (IsEmpty) { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetItemName(); }
-	else
-	{
-		return newItemName;
-	}
+	return newItemName;
 }
 
 int GetItemCount()
@@ -274,6 +244,32 @@ void ReplaceItem(Item newItem)
 	BubbleSort(mList);
 }
 
+void SaveList()
+{
+	std::ofstream saveFile("SavedList.txt");
+	for (auto& item : mList)
+	{
+		saveFile << item.GetStoreName() << " - " << item.GetStoreAddress() << " | "
+			<< "Name: " << item.GetName() << " --- "
+			<< "Count: " << item.GetCount() << " --- "
+			<< "Price: " << item.GetPrice() << " --- Temp: ";
+		switch (item.GetTemp())
+		{
+		case Room:
+			saveFile << "Room\n";
+			break;
+		case Cold:
+
+			saveFile << "Cold\n";
+			break;
+		case Freezer:
+			saveFile << "Freezer\n";
+			break;
+		}
+	}
+	saveFile.close();
+}
+
 void UserInput()
 {
 	while (true)
@@ -323,7 +319,8 @@ void UserInput()
 		}
 
 		case 4:
-			return; // exit menu
+			SaveList();
+			return;
 		}
 	}
 }

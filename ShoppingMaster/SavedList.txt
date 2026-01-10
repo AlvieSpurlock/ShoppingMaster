@@ -1,0 +1,4 @@
+HEB - Wadly | Name: Meat --- Count: 0 --- Price: 2.99 --- Temp: Freezer
+HEB - Wadly | Name: Milk --- Count: 1 --- Price: 1.67 --- Temp: Cold
+Store - Place | Name: Item --- Count: 2 --- Price: 1.99 --- Temp: Room
+Walmart - Rankin | Name: Chips --- Count: 3 --- Price: 2.64 --- Temp: Room

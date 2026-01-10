@@ -2,11 +2,67 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <string_view>
 #include <algorithm> 
 #include <cctype>
 #include <windows.h>
 
 #include "Item.h"
+
+std::vector<Item> mList;
+std::vector<std::vector<std::string>> mStores;
+
+void sBubbleSort(std::vector<std::vector<std::string>>& list)
+{
+	int vectorSize = list.size();
+	bool swapped;
+
+	do {
+		swapped = false;
+
+		for (int index = 1; index < vectorSize; index++)
+		{
+			if (_stricmp(list[index - 1][0].c_str(), list[index][0].c_str()) > 0)
+			{
+				std::swap(list[index], list[index - 1]);
+				swapped = true;
+			}
+		}
+
+		vectorSize--;
+
+	} while (swapped);
+}
+
+
+void BubbleSort(std::vector<Item>& list)
+{
+	int vectorSize = list.size();
+	bool swapped;
+
+	do {
+		swapped = false;
+
+		for (int index = 1; index < vectorSize; index++)
+		{
+			std::string Name1 = list[index - 1].GetStoreName();
+			std::string Name2 = list[index].GetStoreName();
+
+			for (auto& character : Name1) character = std::toupper(character);
+			for (auto& character : Name2) character = std::toupper(character);
+
+			if (Name1 > Name2)
+			{
+				std::swap(list[index], list[index - 1]);
+				swapped = true;
+			}
+		}
+
+		vectorSize--;
+
+	} while (swapped);
+}
+
 
 int GetItemCount()
 {
@@ -92,7 +148,7 @@ double GetItemPrice()
 
 	return newPrice;
 }
-std::vector<Item> mList;
+
 Item MakeItem()
 {
 	std::vector<Item>::iterator it;
@@ -102,11 +158,17 @@ Item MakeItem()
 	std::string newStoreName;
 	std::cin >> newStoreName;
 
+	std::vector<std::string> placeHolder;
+	placeHolder.push_back(newStoreName);
+
 	Console::SetForegroundColor(LightGrey);
 	std::cout << "Item Store Address: ";
 	Console::SetForegroundColor(White);
 	std::string newStoreAddress;
 	std::cin >> newStoreAddress;
+
+	placeHolder.push_back(newStoreAddress);
+	sBubbleSort(mStores);
 
 	Console::SetForegroundColor(LightGrey);
 	std::cout << "Item Name: ";
@@ -130,35 +192,101 @@ Item MakeItem()
 void AddItem(Item item)
 {
 	mList.push_back(item);
-
+	BubbleSort(mList);
 }
-int GetIndex()
+int GetIndex(std::string inputText)
+{
+	int index = 0;
+	Console::SetForegroundColor(LightGrey);
+	std::cout << inputText;
+	Console::SetForegroundColor(White);
+	std::string sIndex;
+	std::cin >> sIndex;
+	if (std::all_of(sIndex.begin(), sIndex.end(), ::isdigit))
+	{
+		if (stoi(sIndex) > 0)
+		{
+			index = stoi(sIndex);
+		}
+		else { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetItemCount(); }
+	}
+	else { Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetItemCount(); }
+
+	return index;
+}
+void ReplaceItem(Item newItem)
 {
 	int index = 0;
 	for (auto& item : mList)
 	{
+		index++;
+		std::cout << index;
 		item.PrintItem();
 	}
-	Console::SetForegroundColor(LightGrey);
-	std::cout << "Item Name: ";
-	std::cin >> index;
-	return index;
+	mList[GetIndex("Item Index: ") - 1] = newItem;
+	BubbleSort(mList);
 }
-void ReplaceItem()
+
+void UserInput()
 {
-	for (auto& item : mList)
+	std::cout << "----Options----\n1:Print List\n2:Add Item\n3:Replace Item\n4:Save List\n";
+	int userIn = GetIndex("Answer? ");
+	if (userIn > 4)
 	{
-		item.PrintItem();
+		Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetIndex("Answer? ");
 	}
-}
+	else
+	{
+		if (userIn < 1)
+		{
+			Console::SetForegroundColor(Red); std::cout << "Invalid Input. Try Again." << std::endl; GetIndex("Answer? ");
+		}
+	}
+	switch (userIn)
+	{
+	case 1:
+	{
+		for (size_t index = 0; index < mStores.size(); index++)
+		{
+			std::cout << mStores[index][0] << "===" << mStores[index][1] << "\n";
+			for (auto& item : mList)
+			{
+				if (item.GetStoreName() == mStores[index][0])
+				{
+					item.PrintItem();
+				}
+			}
+		}
+		UserInput();
+	}
+
+	case 2:
+	{
+		Item item;
+		item = MakeItem();
+		AddItem(item);
+		BubbleSort(mList);
+		for (auto& item : mList) { item.PrintItem(); }
+		UserInput();
+	}
+	case 3:
+	{
+		Item item;
+		item = MakeItem();
+		ReplaceItem(item);
+		BubbleSort(mList);
+		UserInput();
+	}
+
+	case 4:
+	{
+
+	}
+	}
+};
 
 void main()
 {
 	enableANSI();
-	AddItem(MakeItem());
-	for (auto& item : mList)
-	{
-		item.PrintItem();
-	}
-	
+	UserInput();
 }

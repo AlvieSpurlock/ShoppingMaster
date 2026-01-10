@@ -157,14 +157,14 @@ public:
 			Console::SetForegroundColor(LightGrey);
 			std::cout << " -- Item Temp: ";
 			Console::SetForegroundColor(White);
-			std::cout << "Room";
+			std::cout << "Room\n";
 			break;
 		case Cold:
 
 			Console::SetForegroundColor(Cyan);
 			std::cout << " -- Item Temp: ";
 			Console::SetForegroundColor(White);
-			std::cout << "Cold";
+			std::cout << "Cold\n";
 			break;
 		case Freezer:
 			std::cout << " -- ";
@@ -173,7 +173,7 @@ public:
 			std::cout << "Item Temp:";
 			Console::SetBackgroundColor(Black);
 			Console::SetForegroundColor(LightGrey);
-			std::cout << " Freezer";
+			std::cout << " Freezer\n";
 			Console::SetForegroundColor(White);
 			break;
 		}

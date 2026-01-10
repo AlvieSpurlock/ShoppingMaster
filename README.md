@@ -1,5 +1,10 @@
 # ShoppingMaster
+<img width="894" height="657" alt="Screenshot 2026-01-10 132234" src="https://github.com/user-attachments/assets/7bea5c9f-b6f3-44b7-87a0-e67574ff2962" />
+**Description:** A lightweight tool for making and optimizing your shopping list against temperature, so all of your items are as fresh as can be when you get home, and budget balance, so you can’t go over budget.
 
+Instrustions: Follow along. Do **NOT** use spaces.
+
+# More Info:
 _Slanting Means Will Come Later_
 *Item Shape is now irrelevant. Keep that in mind when viewing the pictures.
 
@@ -27,12 +32,10 @@ _Slanting Means Will Come Later_
 
 
 **Process For Optimizing List**
-1: Stores
-2: _Item Temp_
-3: Item Name
+1. Stores
+2. _Item Temp_
+3. Item Name
 
 <img width="500" height="341" alt="ShoppingList_ListOptimizationProcess" src="https://github.com/user-attachments/assets/78bdd58c-37eb-4e25-9f1d-1594e0a1d3d9" />
 
 <img width="707" height="243" alt="ShoppingList_ItemOptimizationProcess" src="https://github.com/user-attachments/assets/da28e5e7-4e8d-4cd0-bc21-ac5cff4394d6" />
-
-Instrustions: Follow along. Do **NOT** use spaces.

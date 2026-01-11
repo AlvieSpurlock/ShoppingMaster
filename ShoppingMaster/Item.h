@@ -45,12 +45,12 @@ public:
 		mTemp = Room;
 	}
 
-	std::string GetStoreName() { return mStore.mName; }
-	std::string GetStoreAddress() { return mStore.mAddress; }
-	std::string GetName() { return mName; }
-	int GetCount() { return mCount; }
-	double GetPrice() { return mPrice; }
-	Temp GetTemp() { return mTemp; }
+	std::string GetStoreName() const { return mStore.mName; }
+	std::string GetStoreAddress() const { return mStore.mAddress; }
+	std::string GetName() const { return mName; }
+	int GetCount() const { return mCount; }
+	double GetPrice() const { return mPrice; }
+	Temp GetTemp() const { return mTemp; }
 
 	void SetStore(std::string storeName, std::string storeAddress)
 	{

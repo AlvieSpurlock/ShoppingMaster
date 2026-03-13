@@ -1,0 +1,7 @@
+Copyright © 2026 Alvie Spurlock
+
+Permission is granted to view this source code for personal, educational, and portfolio review purposes only.
+
+Commercial use, reproduction, modification, distribution, or sublicensing of this software or its source code is strictly prohibited without explicit written permission from the copyright holder.
+
+This software is provided “as is,” without warranty of any kind, express or implied.

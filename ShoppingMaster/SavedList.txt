@@ -1,20 +1,28 @@
 =====HEB - Wadley=====
 Temp: Room
-Name: Chips -- Count: 4
-Price: 9.84
-==========================
+Name: Chips -- Count: 2
+Price: 4.68
+============================
+Temp: Cold
+Name: Milk -- Count: 2
+Price: 4.64
+============================
 Temp: Freezer
-Name: Ice -- Count: 2
-Price: 4.86
-==========================
+Name: Ice -- Count: 1
+Price: 2.98
+============================
 
 
 =====Walmart - I-20=====
+Temp: Room
+Name: Ketchup -- Count: 2
+Price: 4.9
+==============================
 Temp: Cold
-Name: Milk -- Count: 1
-Price: 2.87
-============================
+Name: Creamer -- Count: 3
+Price: 11.94
+==============================
 Temp: Freezer
-Name: Ice_Cream -- Count: 1
-Price: 4.57
-============================
+Name: Ice-Cream -- Count: 3
+Price: 13.68
+==============================
